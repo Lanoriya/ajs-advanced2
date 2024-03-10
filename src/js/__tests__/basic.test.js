@@ -1,17 +1,47 @@
-import orderByProps from '../Sorter';
+import { descriptionHider } from '../Description';
 
-describe('Check sort', () => {
-  const obj = { name: "мечник", health: 10, level: 2, attack: 80, defence: 40 };
-
-  test('sort checker', () => {
-    expect(() => orderByProps(obj, ["name", "level"]).toEqual(
+describe('Check description', () => {
+  const character = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: 
     [
-      { key: 'name', value: 'мечник' },
-      { key: 'level', value: 2 },
-      { key: 'attack', value: 80 },
-      { key: 'defence', value: 40 },
-      { key: 'health', value: 10 }
-    ]
-    ));
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон'
+      }, 
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...'
+      }
+    ]	
+  }
+
+  test('description checker', () => {
+    const result = descriptionHider(character);
+
+    expect(result).toEqual(
+      [
+        {
+          id: 8,
+          name: 'Двойной выстрел',
+          icon: 'http://...',
+          description: 'Двойной выстрел наносит двойной урон'
+        },
+        {
+          id: 9,
+          name: 'Нокаутирующий удар',
+          icon: 'http://...',
+          description: 'Описание недоступно'
+        }
+      ]
+    );
   })
 })
